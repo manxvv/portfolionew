@@ -5,7 +5,7 @@ import { Spotlight } from "@/components/ui/spotlight";
 export function SpotlightPreview() {
   return (
     <div
-      className="relative flex h-[40rem] w-full overflow-hidden  bg-black/[0.96] antialiased md:items-center md:justify-center">
+className="relative flex h-[30rem] md:h-[40rem] w-full overflow-hidden bg-black/[0.96] antialiased md:items-center md:justify-center">
       <div
         className={cn(
           "pointer-events-none absolute inset-0 [background-size:40px_40px] select-none",
