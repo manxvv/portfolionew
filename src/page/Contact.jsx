@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { ChevronDown, Github, Linkedin, Mail, ExternalLink, Menu, X, Send, MapPin, Phone } from 'lucide-react'
+import React, { useState } from 'react';
+import { Github, Linkedin, Mail, Send } from 'lucide-react';
 import { toast } from 'sonner';
 
 function Contact() {
@@ -7,21 +7,44 @@ function Contact() {
     name: '',
     email: '',
     message: ''
-  })
+  });
+  const [errors, setErrors] = useState({});
   const [status, setStatus] = useState('');
 
-  const [showSuccess, setShowSuccess] = useState(false)
-
   const handleInputChange = (e) => {
+    const { name, value } = e.target;
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
-    })
-  }
+      [name]: value
+    });
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+    if (!formData.name.trim()) {
+      newErrors.name = 'Full name is required';
+    }
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email is required';
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = 'Email address is invalid';
+    }
+    if (!formData.message.trim()) {
+      newErrors.message = 'Message is required';
+    }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validateForm()) {
+      toast.error('Please fill in all required fields correctly.');
+      return;
+    }
+    
     setStatus('Sending...');
+    toast.loading('Sending your message...');
 
     try {
       const response = await fetch('/api/contact', {
@@ -32,19 +55,25 @@ function Contact() {
         body: JSON.stringify(formData),
       });
 
+      toast.dismiss();
+
       if (response.ok) {
         toast.success('Message sent successfully!');
         setFormData({ name: '', email: '', message: '' });
+        setErrors({});
+        setStatus('');
       } else {
         const errorData = await response.json();
-        setStatus(errorData.message || 'Failed to send message.');
+        toast.error(errorData.message || 'Failed to send message.');
+        setStatus('Failed to send message.');
       }
     } catch (error) {
+      toast.dismiss();
       console.error('Error submitting form:', error);
+      toast.error('An error occurred. Please try again.');
       setStatus('An error occurred. Please try again.');
     }
   };
-
 
   return (
     <div className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white relative overflow-hidden min-h-screen">
@@ -93,7 +122,7 @@ function Contact() {
               
               {/* Contact Methods */}
               <div className="space-y-6">
-                <div className="group flex items-center p-4 bg-gradient-to-r from-gray-800/50 to-gray-700/50 rounded-xl border border-gray-600/30 hover:border-blue-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/20 cursor-pointer">
+                <a href="mailto:manavguleria19@gmail.com" className="group flex items-center p-4 bg-gradient-to-r from-gray-800/50 to-gray-700/50 rounded-xl border border-gray-600/30 hover:border-blue-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/20 cursor-pointer">
                   <div className="p-3 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg mr-4 group-hover:scale-110 transition-transform duration-300">
                     <Mail className="text-white" size={20} />
                   </div>
@@ -101,9 +130,9 @@ function Contact() {
                     <div className="text-gray-400 text-sm">Email</div>
                     <div className="text-white font-medium">manavguleria19@gmail.com</div>
                   </div>
-                </div>
+                </a>
                 
-                <div className="group flex items-center p-4 bg-gradient-to-r from-gray-800/50 to-gray-700/50 rounded-xl border border-gray-600/30 hover:border-purple-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/20 cursor-pointer">
+                <a href="https://github.com/manxvv" target="_blank" rel="noopener noreferrer" className="group flex items-center p-4 bg-gradient-to-r from-gray-800/50 to-gray-700/50 rounded-xl border border-gray-600/30 hover:border-purple-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/20 cursor-pointer">
                   <div className="p-3 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg mr-4 group-hover:scale-110 transition-transform duration-300">
                     <Github className="text-white" size={20} />
                   </div>
@@ -111,9 +140,9 @@ function Contact() {
                     <div className="text-gray-400 text-sm">GitHub</div>
                     <div className="text-white font-medium">github.com/manxvv</div>
                   </div>
-                </div>
+                </a>
                 
-                <div className="group flex items-center p-4 bg-gradient-to-r from-gray-800/50 to-gray-700/50 rounded-xl border border-gray-600/30 hover:border-pink-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-pink-500/20 cursor-pointer">
+                <a href="https://linkedin.com/in/manav-guleria" target="_blank" rel="noopener noreferrer" className="group flex items-center p-4 bg-gradient-to-r from-gray-800/50 to-gray-700/50 rounded-xl border border-gray-600/30 hover:border-pink-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-pink-500/20 cursor-pointer">
                   <div className="p-3 bg-gradient-to-br from-pink-500 to-pink-600 rounded-lg mr-4 group-hover:scale-110 transition-transform duration-300">
                     <Linkedin className="text-white" size={20} />
                   </div>
@@ -121,7 +150,7 @@ function Contact() {
                     <div className="text-gray-400 text-sm">LinkedIn</div>
                     <div className="text-white font-medium">linkedin.com/in/manav-guleria</div>
                   </div>
-                </div>
+                </a>
               </div>
               
               {/* Additional Info */}
@@ -136,7 +165,7 @@ function Contact() {
             
             {/* Contact Form */}
             <div>
-              <div className="space-y-6 bg-gradient-to-br from-gray-800/40 to-gray-700/40 p-8 rounded-2xl border border-gray-600/20 backdrop-blur-sm">
+              <form onSubmit={handleSubmit} className="space-y-6 bg-gradient-to-br from-gray-800/40 to-gray-700/40 p-8 rounded-2xl border border-gray-600/20 backdrop-blur-sm">
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-3">
                     Full Name
@@ -147,11 +176,12 @@ function Contact() {
                     name="name"
                     value={formData.name}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 bg-gray-900/50 border border-gray-600/50 rounded-xl text-white placeholder-gray-400 
+                    className={`w-full px-4 py-3 bg-gray-900/50 border rounded-xl text-white placeholder-gray-400 
                              focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300
-                             hover:border-gray-500/70 focus:outline-none"
+                             hover:border-gray-500/70 focus:outline-none ${errors.name ? 'border-red-500' : 'border-gray-600/50'}`}
                     placeholder="Enter your full name"
                   />
+                  {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
                 </div>
                 
                 <div>
@@ -164,11 +194,12 @@ function Contact() {
                     name="email"
                     value={formData.email}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 bg-gray-900/50 border border-gray-600/50 rounded-xl text-white placeholder-gray-400 
+                    className={`w-full px-4 py-3 bg-gray-900/50 border rounded-xl text-white placeholder-gray-400 
                              focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300
-                             hover:border-gray-500/70 focus:outline-none"
+                             hover:border-gray-500/70 focus:outline-none ${errors.email ? 'border-red-500' : 'border-gray-600/50'}`}
                     placeholder="your.email@example.com"
                   />
+                  {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
                 </div>
                 
                 <div>
@@ -181,32 +212,26 @@ function Contact() {
                     rows={5}
                     value={formData.message}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 bg-gray-900/50 border border-gray-600/50 rounded-xl text-white placeholder-gray-400 
+                    className={`w-full px-4 py-3 bg-gray-900/50 border rounded-xl text-white placeholder-gray-400 
                              focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300
-                             hover:border-gray-500/70 resize-none focus:outline-none"
+                             hover:border-gray-500/70 resize-none focus:outline-none ${errors.message ? 'border-red-500' : 'border-gray-600/50'}`}
                     placeholder="Tell me about your project or just say hello..."
                   ></textarea>
+                  {errors.message && <p className="text-red-500 text-xs mt-1">{errors.message}</p>}
                 </div>
                 
                 <button
-                  onClick={handleSubmit}
+                  type="submit"
+                  disabled={status === 'Sending...'}
                   className="group w-full px-6 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl 
                            hover:from-blue-500 hover:to-purple-500 transition-all duration-300 transform hover:scale-105 
-                           hover:shadow-xl hover:shadow-blue-500/25 flex items-center justify-center space-x-2"
+                           hover:shadow-xl hover:shadow-blue-500/25 flex items-center justify-center space-x-2
+                           disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  <span>Send Message</span>
+                  <span>{status === 'Sending...' ? 'Sending...' : 'Send Message'}</span>
                   <Send size={18} className="group-hover:translate-x-1 transition-transform duration-300" />
                 </button>
-              </div>
-              
-              {/* Success message */}
-              <div 
-                className={`mt-6 p-4 bg-green-500/10 border border-green-500/20 rounded-xl text-green-400 text-sm text-center transition-opacity duration-300 ${
-                  showSuccess ? 'opacity-100' : 'opacity-0'
-                }`}
-              >
-                Thank you! Your message has been sent successfully.
-              </div>
+              </form>
             </div>
           </div>
         </div>
@@ -219,15 +244,15 @@ function Contact() {
               Let's collaborate and bring your ideas to life. I'm excited to hear about your next project!
             </p>
             <div className="flex justify-center space-x-6">
-              <div className="group p-3 bg-gradient-to-br from-blue-500/20 to-blue-600/20 rounded-full border border-blue-500/30 hover:border-blue-400/50 transition-all duration-300 hover:scale-110 cursor-pointer">
+              <a href="https://github.com/manxvv" target="_blank" rel="noopener noreferrer" className="group p-3 bg-gradient-to-br from-blue-500/20 to-blue-600/20 rounded-full border border-blue-500/30 hover:border-blue-400/50 transition-all duration-300 hover:scale-110 cursor-pointer">
                 <Github className="text-blue-400" size={24} />
-              </div>
-              <div className="group p-3 bg-gradient-to-br from-purple-500/20 to-purple-600/20 rounded-full border border-purple-500/30 hover:border-purple-400/50 transition-all duration-300 hover:scale-110 cursor-pointer">
+              </a>
+              <a href="https://linkedin.com/in/manav-guleria" target="_blank" rel="noopener noreferrer" className="group p-3 bg-gradient-to-br from-purple-500/20 to-purple-600/20 rounded-full border border-purple-500/30 hover:border-purple-400/50 transition-all duration-300 hover:scale-110 cursor-pointer">
                 <Linkedin className="text-purple-400" size={24} />
-              </div>
-              <div className="group p-3 bg-gradient-to-br from-pink-500/20 to-pink-600/20 rounded-full border border-pink-500/30 hover:border-pink-400/50 transition-all duration-300 hover:scale-110 cursor-pointer">
+              </a>
+              <a href="mailto:manavguleria19@gmail.com" className="group p-3 bg-gradient-to-br from-pink-500/20 to-pink-600/20 rounded-full border border-pink-500/30 hover:border-pink-400/50 transition-all duration-300 hover:scale-110 cursor-pointer">
                 <Mail className="text-pink-400" size={24} />
-              </div>
+              </a>
             </div>
           </div>
         </div>
@@ -236,4 +261,4 @@ function Contact() {
   )
 }
 
-export default Contact
+export default Contact;

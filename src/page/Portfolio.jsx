@@ -1,6 +1,5 @@
 "use client"
 
-import Head from 'next/head'
 import { useState, useEffect } from 'react'
 import { NavbarDemo } from './NavbarDemo'
 import { SpotlightPreview } from './SpotlightPreview'

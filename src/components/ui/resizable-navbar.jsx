@@ -1,4 +1,4 @@
-"use client";;
+"use client";
 import { cn } from "@/lib/utils";
 import { IconMenu2, IconX } from "@tabler/icons-react";
   import {
@@ -195,11 +195,11 @@ export const NavbarLogo = () => {
       href="#"
       className="relative z-20 mr-4 flex items-center space-x-2 px-2 py-1 text-sm font-normal text-black">
       <img
-        src="https://assets.aceternity.com/logo-dark.png"
+        src="/pngtree-code-line-icon-vector-png-image_6691024.png"
         alt="logo"
-        width={30}
+        width={30} className="bg-white rounded-md p-1 "
         height={30} />
-      <span className="font-medium text-black dark:text-white">Startup</span>
+      <span className="font-medium bg-white p-1 rounded-md text-black dark:text-white">Manxvv</span>
     </a>)
   );
 };

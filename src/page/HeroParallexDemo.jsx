@@ -6,23 +6,23 @@ export function HeroParallaxDemo() {
   return <HeroParallax products={products} />;
 }
 export const products = [
+    {
+      title: "Xpertment",
+      link: "https://xpertment.com/",
+      thumbnail:
+        "/xpertment.png",
+    },
+    {
+      title: "HSI-USA",
+      link: "https://www.hsi-america.com/",
+      thumbnail:
+        "/hsi.png",
+    },
   {
-    title: "Moonbeam",
-    link: "https://gomoonbeam.com",
+    title: "Archit Sood Photography",
+    link: "https://www.architsood.com",
     thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/moonbeam.png",
-  },
-  {
-    title: "Cursor",
-    link: "https://cursor.so",
-    thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/cursor.png",
-  },
-  {
-    title: "Rogue",
-    link: "https://userogue.com",
-    thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/rogue.png",
+      "/archit.png",
   },
 
   {
@@ -63,10 +63,10 @@ export const products = [
       "https://aceternity.com/images/products/thumbnails/new/tailwindmasterkit.png",
   },
   {
-    title: "SmartBridge",
-    link: "https://smartbridgetech.com",
+    title: "ShadCn",
+    link: "https://ui.shadcn.com",
     thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/smartbridge.png",
+      "/shadcn.png",
   },
   {
     title: "Renderwork Studio",

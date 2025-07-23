@@ -100,11 +100,14 @@ function About() {
             
             {/* Call to action */}
             <div className="pt-8">
+                <a href='#contact'>
               <button className="group cursor-pointer relative px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl 
                                hover:from-blue-500 hover:to-purple-500 transition-all duration-300 transform hover:scale-105 hover:shadow-xl hover:shadow-blue-500/25">
+                
                 <span className="relative  z-10">Let's Connect</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-white/0 to-white/0 group-hover:from-white/10 group-hover:to-white/10 rounded-xl transition-all duration-300"></div>
               </button>
+               </a>
             </div>
           </div>
         </div>
