@@ -2,7 +2,7 @@
 import {
   Navbar,
   NavBody,
-  NavItems,
+  NavItems, 
   MobileNav,
   NavbarLogo,
   NavbarButton,
@@ -70,7 +70,7 @@ export function NavbarDemo() {
                 Login
               </NavbarButton> */}
               <NavbarButton
-                onClick={() => {setIsMobileMenuOpen(false);    window.location.href = "tel:+919876543210";}}
+                onClick={() => {setIsMobileMenuOpen(false);    window.location.href = "tel:+917590952074";}}
                 variant="primary"
                 className="w-full">
                 Book a call
