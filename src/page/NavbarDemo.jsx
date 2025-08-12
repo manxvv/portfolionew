@@ -42,10 +42,11 @@ export function NavbarDemo() {
               <NavbarButton
                 variant="primary"
                 className="w-full"
-  onClick={() => window.open('/cv.pdf', '_blank')}
                 >
+  <a href="/public/cv.pdf" download>
 
                  Resume
+                 </a>
               </NavbarButton>          </div>
         </NavBody>
 
@@ -78,12 +79,12 @@ export function NavbarDemo() {
               <NavbarButton
                 variant="primary"
                 className="w-full"
-                  onClick={() => window.open('/cv.pdf', '_blank')}
 
                 >
-                
+  <a href="/public/cv.pdf" download>
 
                 Download Resume
+                </a>
               </NavbarButton>
               
             </div>
