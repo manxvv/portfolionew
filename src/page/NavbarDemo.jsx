@@ -81,6 +81,7 @@ export function NavbarDemo() {
                   onClick={() => window.open('/cv.pdf', '_blank')}
 
                 >
+                
 
                 Download Resume
               </NavbarButton>
