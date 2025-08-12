@@ -39,8 +39,14 @@ export function NavbarDemo() {
           <NavItems items={navItems} />
           <div className="flex items-center gap-4">
             {/* <NavbarButton variant="secondary">Login</NavbarButton> */}
-            <NavbarButton variant="primary">Book a call</NavbarButton>
-          </div>
+              <NavbarButton
+                variant="primary"
+                className="w-full">
+                    <a href="/cv.pdf" download>
+
+                 Resume
+                </a>
+              </NavbarButton>          </div>
         </NavBody>
 
         {/* Mobile Navigation */}
@@ -70,10 +76,12 @@ export function NavbarDemo() {
                 Login
               </NavbarButton> */}
               <NavbarButton
-                onClick={() => {setIsMobileMenuOpen(false);    window.location.href = "tel:+917590952074";}}
                 variant="primary"
                 className="w-full">
-                Book a call
+                    <a href="/cv.pdf" download>
+
+                Download Resume
+                </a>
               </NavbarButton>
               
             </div>
